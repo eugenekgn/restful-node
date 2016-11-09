@@ -1,0 +1,32 @@
+{
+  "environment": {
+    "type": "default"
+  },
+  "database": {
+    "connectionString": "mongodb://localhost:27017/customer"
+  },
+  "server": {
+    "port": 9000,
+    "isMultithreaded": false
+  },
+  "logger": {
+    "filesPath": "/logs",
+    "appLogFilePath": "/logs/app_log",
+    "transports": [
+      "dailyRotateFile",
+      "console"
+    ]
+  },
+  "externalServices": {
+    "s3": {
+      "accessKeyId": "",
+      "secretAccessKey": "",
+      "apiVersion": "",
+      "imageBucket": "",
+      "processImageBucket": "",
+      "cloudFrontId": "",
+      "redirectAssetsUrl": "",
+      "loanWatchesBucket": ""
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "environment": {
+    "type": "test"
+  },
+  "database": {
+    "connectionString": "mongodb://localhost:27017/customer_test"
+  },
+  "logger": {
+    "transports": []
+  },
+  "server": {
+    "port": 9080
+  }
+}

@@ -42,7 +42,7 @@ gulp.task('transpile', ()=> {
 
 gulp.task('nodemon', ['copy', 'transpile'], () =>
   gulpNodemon({
-    script: path.join(config.dist, 'index.js'),
+    script: path.join(config.dist, 'app.js'),
     ext: 'js',
     ignore: ['node_modules/**/*.js', 'dist/**/*.js'],
     tasks: ['copy', 'transpile']
