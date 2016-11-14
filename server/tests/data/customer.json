@@ -1,0 +1,23 @@
+[
+  {
+    "username": "NUM001",
+    "mobileNumber": "1234567891",
+    "firstName": "firstName_1",
+    "lastName": "lastName_1",
+    "age": 20
+  },
+  {
+    "username": "NUM002",
+    "mobileNumber": "1234567892",
+    "firstName": "firstName_2",
+    "lastName": "lastName_2",
+    "age": 20
+  },
+  {
+    "username": "NUM003",
+    "mobileNumber": "1234567893",
+    "firstName": "firstName_3",
+    "lastName": "lastName_3",
+    "age": 30
+  }
+]

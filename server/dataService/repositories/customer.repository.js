@@ -1,7 +1,7 @@
 'use strict';
 
-import BaseRepository from './base'
-import Customer from '../schemas/customer.schema'
+import BaseRepository from './base';
+import Customer from '../schemas/customer.schema';
 
 class CustomerRepository extends BaseRepository {
 

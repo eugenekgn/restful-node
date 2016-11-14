@@ -12,50 +12,52 @@ class CustomerController extends BaseController {
 
   registerRoutes() {
     const self = this;
-    self.router.get('/', self.wrap(self._getAllCustomers));
-    self.router.get('/:customerId', self.wrap(self._getCustomerById));
-    self.router.post('/', validator(customerValidation.createCustomer), self.wrap(self._createCustomer));
-    self.router.put('/:customerId', validator(customerValidation.updateCustomer), self.wrap(self._updateCustomer));
-    self.router.delete('/:customerId', self.wrap(self._delete));
+    self.router.get('/', self.wrap(req => self._getAllCustomers(req)));
+    self.router.get('/:customerId', self.wrap((req) => self._getCustomerById(req)));
+    self.router.post('/', validator(customerValidation.createCustomer), self.wrap((req) => self._createCustomer(req)));
+    self.router.post('/collection', self.wrap((req) => self._createCustomers(req)));
+    self.router.put('/:customerId', validator(customerValidation.updateCustomer), self.wrap((req) => self._updateCustomer(req)));
+    self.router.delete('/:customerId', self.wrap((req) => self._delete(req)));
 
     return self.router;
   }
 
-  _getCustomerById = (req) => {
+  _getCustomerById(req) {
     const self = this;
 
     const customerId = get(self.getParams(req), 'customerId');
     return self.service.getCustomerById(customerId);
-  };
+  }
 
-  _getAllCustomers = (req) => {
+  _getAllCustomers(req) {
     const self = this;
 
-    const {
-      limit = 50,
-      skip = 0
-    } = self.getQuery(req);
+    const query = get(self.getParams(req));
+    return self.service.find({findOptions: query});
+  }
 
-    return self.service.find({limit, skip});
-  };
-
-  _createCustomer = (req) => {
+  _createCustomer(req) {
     const self = this;
-
     const customer = self.getBody(req);
     return self.service.create(customer);
-  };
+  }
 
-  _updateCustomer = (req) => {
+  _createCustomers(req) {
+    const self = this;
+    const customers = self.getBody(req);
+    return self.service.createCollection(customers);
+  }
+
+  _updateCustomer(req) {
     const self = this;
 
     const customerId = get(self.getParams(req), 'customerId');
     const customerToUpdate = self.getBody(req);
 
     return self.service.update(customerId, customerToUpdate);
-  };
+  }
 
-  _delete = (req) => {
+  _delete(req) {
     const self = this;
 
     const customerId = get(self.getParams(req), 'id');

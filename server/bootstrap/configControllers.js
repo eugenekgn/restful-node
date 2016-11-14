@@ -12,6 +12,10 @@ export default(app) => {
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(cors());
 
+  // disable headers
+  app.disable('x-powered-by');
+
   app.use('/api', heartbeatController.registerRoutes());
   app.use('/api/customers', customerController.registerRoutes());
+
 };

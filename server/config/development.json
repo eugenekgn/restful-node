@@ -6,7 +6,9 @@
     "connectionString": "mongodb://localhost:27017/customer_development"
   },
   "logger": {
-    "transports": []
+    "transports": [
+      "console"
+    ]
   },
   "server": {
     "port": 9000

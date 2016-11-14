@@ -37,10 +37,10 @@ const appLogger = new (winston.Logger)({
 });
 
 export default {
-  info: function (message) {
+  info: (message) => {
     appLogger.info(message);
   },
-  error: function (message) {
+  error: (message) => {
     appLogger.error(message);
   }
 };

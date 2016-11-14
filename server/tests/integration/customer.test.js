@@ -2,30 +2,33 @@ import mongoose from 'mongoose';
 import request from 'supertest-as-promised';
 import httpStatus from 'http-status';
 import chai, {expect} from 'chai';
-import app from '../../index';
+import head from 'lodash/head';
+import app from '../../../index';
+import customers from '../data/customer.json';
 
 chai.config.includeStack = true;
 
 
-after((done) => {
-  mongoose.models = {};
-  mongoose.modelSchemas = {};
-  mongoose.connection.close();
-  done();
-});
-
 describe('## Customer APIs', () => {
-  let customer = {
-    username: 'NUM001',
-    mobileNumber: '1234567890',
-    firstName: 'firstName_1',
-    lastName: 'lastName_1',
-    age: 20
-  };
+
+  let customer;
+
+  before((done)=> {
+    customer = head(customers);
+    done();
+  });
+
+  after((done) => {
+    mongoose.models = {};
+    mongoose.modelSchemas = {};
+    mongoose.connection.close();
+    done();
+  });
 
 
   describe('# POST /api/customers', () => {
     it('should create a new customers', (done) => {
+
       request(app)
         .post('/api/customers')
         .send(customer)
@@ -106,4 +109,6 @@ describe('## Customer APIs', () => {
         .catch(done);
     });
   });
+
+
 });

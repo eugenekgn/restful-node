@@ -12,12 +12,12 @@ const map = (sourceType, destinationType, source) => {
 };
 
 const mapArray = (sourceType, destinationType, sources) => {
-  return sources.map(source => {
+  return sources.map((source) => {
     return mapper.map(sourceType, destinationType, source);
-  })
+  });
 };
 
 export {
   map,
   mapArray
-}
+};

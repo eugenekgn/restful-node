@@ -11,12 +11,12 @@ export default class BaseRepository {
   getMongooseModel(id) {
     const self = this;
     return self.Model.findById(id);
-  };
+  }
 
   findById(id) {
     const self = this;
     return self.Model.findById(id).lean();
-  };
+  }
 
   find(query) {
     const self = this;
@@ -50,7 +50,7 @@ export default class BaseRepository {
       .skip(skip)
       .limit(limit)
       .lean();
-  };
+  }
 
   findOne(query, projection) {
     const self = this;
@@ -67,12 +67,12 @@ export default class BaseRepository {
     }).then((updatedModel) => {
       return updatedModel.toObject();
     });
-  };
+  }
 
   remove(id) {
     const self = this;
     return self.Model.findByIdAndRemove(id);
-  };
+  }
 
   create(info) {
     const self = this;
@@ -81,7 +81,7 @@ export default class BaseRepository {
     return entity.save().then((entity) => {
       return entity.toObject();
     });
-  };
+  }
 
   bulkCreate(models) {
     const self = this;
@@ -90,11 +90,11 @@ export default class BaseRepository {
         return model.toObject();
       });
     });
-  };
+  }
 
   count(query) {
     const self = this;
     return self.Model.count(query);
-  };
+  }
 }
 
