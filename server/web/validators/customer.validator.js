@@ -1,6 +1,6 @@
 'use strict';
 
-import Joi from 'joi';
+const Joi = require('joi');
 
 const bodyRules = {
   username: Joi.string().required(),
@@ -10,7 +10,7 @@ const bodyRules = {
   age: Joi.number().required()
 };
 
-export default {
+module.exports = {
   createCustomer: {
     body: bodyRules
   },
@@ -20,4 +20,4 @@ export default {
       customerId: Joi.string().hex().required()
     }
   }
-}
+};

@@ -45,19 +45,28 @@ gulp.task('transpile', () => {
     .pipe(gulp.dest(config.distPath));
 });
 
-gulp.task('nodemon', ['copy', 'transpile'], () =>
-  gulpNodemon({
-    script: path.join(config.dist, 'index.js'),
-    ext: 'js',
-    ignore: ['node_modules/**/*.js', 'dist/**/*.js'],
-    tasks: ['copy', 'transpile']
-  })
-);
+// gulp.task('nodemon', ['copy', 'transpile'], () =>
+//   gulpNodemon({
+//     script: path.join(config.dist, 'index.js'),
+//     ext: 'js',
+//     ignore: ['node_modules/**/*.js', 'dist/**/*.js'],
+//     tasks: ['copy', 'transpile']
+//   })
+// );
 
-gulp.task('serve', ['clean'], () => runSequence('nodemon'));
+gulp.task('serve', () => runSequence('nodemon'));
 
 gulp.task('default', ['clean'], () => {
   runSequence(
     ['copy', 'transpile']
   );
 });
+
+gulp.task('nodemon', () =>
+  gulpNodemon({
+    script: './index.js',
+    ext: 'js',
+    ignore: ['node_modules/**/*.js']
+  })
+);
+

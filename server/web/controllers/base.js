@@ -1,12 +1,13 @@
 'use strict';
 
-import express from 'express';
-import httpStatus from 'http-status';
-import isNil from 'lodash/isNil';
-import isEmpty from 'lodash/isEmpty';
-import Error from '../../services/models/error';
+const express = require('express');
+const httpStatus = require('http-status');
+const isNil = require('lodash/isNil');
+const isEmpty = require('lodash/isEmpty');
+const Error = require('../../services/models/error');
+const get = require('lodash/get');
 
-export default class BaseController {
+class BaseController {
   constructor(service) {
     this.service = service;
     this.router = express.Router();
@@ -36,7 +37,7 @@ export default class BaseController {
           data = {
             statusCode: httpStatus.NOT_FOUND,
             message: httpStatus[404]
-          }
+          };
         }
         self.send(res, null, data);
       }, (err) => {
@@ -55,8 +56,11 @@ export default class BaseController {
         res.send();
       }
     } else {
-      res.statusCode = data && data.statusCode || httpStatus.OK;
+      res.statusCode = get(data, 'statusCode') || httpStatus.OK;
       res.json(data);
     }
   }
 }
+
+module.exports = BaseController;
+

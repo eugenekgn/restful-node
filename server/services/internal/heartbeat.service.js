@@ -1,6 +1,6 @@
 'use strict';
 
-import httpStatus from 'http-status';
+const httpStatus = require('http-status');
 
 class HeartbeatService {
   getValidResponse() {
@@ -8,4 +8,4 @@ class HeartbeatService {
   }
 }
 
-export default new HeartbeatService();
+module.exports = new HeartbeatService();

@@ -1,8 +1,8 @@
 'use strict';
 
-import mapper from 'automapper-ts';
-import isUndefined from 'lodash/isUndefined';
-import CustomerDTOModel from '../models/customerDTO';
+const mapper = require('automapper-ts');
+const isUndefined = require('lodash/isUndefined');
+const CustomerDTOModel = require('../models/customerDTO');
 
 const DALCustomerModel = 'DALCustomerModel';
 
@@ -11,7 +11,7 @@ class CustomerMaps {
   registerMaps() {
 
     /**
-     * Map from dto to model
+     * Map =require( dto to model
      */
     mapper.createMap(CustomerDTOModel, DALCustomerModel)
       .forMember('_id', (opts) => {
@@ -57,4 +57,4 @@ class CustomerMaps {
   }
 }
 
-export default new CustomerMaps();
+module.exports = new CustomerMaps();

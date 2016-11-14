@@ -1,6 +1,6 @@
 'use strict';
 
-import customerMap from './customer.map'
+const customerMap = require('./customer.map');
 //import creditCardMap from './creditCard.map'
 
 class Mapper {
@@ -11,4 +11,4 @@ class Mapper {
   }
 }
 
-export default new Mapper();
+module.exports = new Mapper();

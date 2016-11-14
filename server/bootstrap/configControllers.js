@@ -1,12 +1,11 @@
 'use strict';
 
-import bodyParser from 'body-parser';
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const heartbeatController = require('../web/controllers/heartbeat.controller');
+const customerController = require('../web/controllers/customer.controller');
 
-import heartbeatController from '../web/controllers/heartbeat.controller';
-import customerController from '../web/controllers/customer.controller';
-import cors from 'cors';
-
-export default(app) => {
+module.exports = (app) => {
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));

@@ -1,6 +1,6 @@
 'use strict';
 
-export default class CustomerDTO {
+class CustomerDTO {
   constructor() {
     this.customerId = undefined;
     this.username = undefined;
@@ -8,6 +8,7 @@ export default class CustomerDTO {
     this.lastName = undefined;
     this.mobileNumber = undefined;
     this.age = undefined;
-    this.createdAt = undefined;
   }
 }
+
+module.exports = CustomerDTO;

@@ -1,7 +1,7 @@
 'use strict';
 
-import mapper from 'automapper-ts';
-import mappings from '../services/mappings';
+const mapper = require('automapper-ts');
+const mappings = require('../services/mappings');
 
 (() => {
   mappings.register();
@@ -17,7 +17,7 @@ const mapArray = (sourceType, destinationType, sources) => {
   });
 };
 
-export {
-  map,
-  mapArray
+module.exports = {
+  map: map,
+  mapArray: mapArray
 };

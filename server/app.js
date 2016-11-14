@@ -1,9 +1,9 @@
-import express from 'express';
-import bootstrap from './bootstrap';
-import dbContext from './dataService/context';
+'use strict';
 
-export default () => {
-  dbContext.connect();
+const express = require('express');
+const bootstrap = require('./bootstrap');
+
+module.exports = () => {
 
   const app = express();
   bootstrap(app);

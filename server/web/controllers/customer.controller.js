@@ -1,23 +1,21 @@
 'use strict';
 
-import validator from 'express-validation';
-import get from 'lodash/get';
-
-import BaseController from './base';
-import customerService from '../../services/internal/customer.service';
-import customerValidation from '../validators/customer.validator';
-
+const validator = require('express-validation');
+const {get} = require('lodash');
+const BaseController = require('./base');
+const customerService = require('../../services/internal/customer.service');
+const customerValidation = require('../validators/customer.validator');
 
 class CustomerController extends BaseController {
 
   registerRoutes() {
     const self = this;
     self.router.get('/', self.wrap(req => self._getAllCustomers(req)));
-    self.router.get('/:customerId', self.wrap((req) => self._getCustomerById(req)));
-    self.router.post('/', validator(customerValidation.createCustomer), self.wrap((req) => self._createCustomer(req)));
-    self.router.post('/collection', self.wrap((req) => self._createCustomers(req)));
-    self.router.put('/:customerId', validator(customerValidation.updateCustomer), self.wrap((req) => self._updateCustomer(req)));
-    self.router.delete('/:customerId', self.wrap((req) => self._delete(req)));
+    self.router.get('/:customerId', self.wrap(req => self._getCustomerById(req)));
+    self.router.post('/', validator(customerValidation.createCustomer), self.wrap(req => self._createCustomer(req)));
+    self.router.post('/collection', self.wrap(req => self._createCustomers(req)));
+    self.router.put('/:customerId', validator(customerValidation.updateCustomer), self.wrap(req => self._updateCustomer(req)));
+    self.router.delete('/:customerId', self.wrap(req => self._delete(req)));
 
     return self.router;
   }
@@ -66,4 +64,4 @@ class CustomerController extends BaseController {
   }
 }
 
-export default new CustomerController(customerService);
+module.exports = new CustomerController(customerService);

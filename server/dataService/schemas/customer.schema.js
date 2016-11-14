@@ -1,33 +1,45 @@
 'use strict';
 
-import mongoose from 'mongoose';
+/* eslint-disable new-cap, no-magic-numbers */
 
-const CustomerSchema = mongoose.Schema({
-  username: {
-    type: String,
-    required: true
-  },
-  last_name: {
-    type: String,
-    required: true
-  },
-  first_name: {
-    type: String,
-    required: true
-  },
-  age: {
-    type: Number,
-    required: false
-  },
-  mobile_number: {
-    type: String,
-    required: true,
-    match: [/^[1-9][0-9]{9}$/, 'Invalid Number']
-  },
-  created_at: {
-    type: Date,
-    default: Date.now
-  }
-});
+const schemaFactory = require('./base');
 
-export default mongoose.model('Customer', CustomerSchema);
+const getCustomer = (sequelize, DataTypes) => {
+  return {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    first_name: {
+      type: DataTypes.STRING(30),
+      allowNull: false
+    },
+    last_name: {
+      type: DataTypes.STRING(30),
+      allowNull: false
+    },
+    username: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      unique: true
+    },
+    mobile_number: {
+      type: DataTypes.STRING(100)
+    },
+    age: {
+      type: DataTypes.INTEGER
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: sequelize.fn('NOW')
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: sequelize.fn('NOW')
+    }
+  };
+};
+
+module.exports = schemaFactory.createSchema('customer', getCustomer);

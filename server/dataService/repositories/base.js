@@ -1,100 +1,85 @@
 'use strict';
 
-import isNumber from 'lodash/isNumber';
+const isArray = require('lodash/isArray');
 
 export default class BaseRepository {
-
   constructor(model) {
     this.Model = model;
   }
 
-  getMongooseModel(id) {
-    const self = this;
-    return self.Model.findById(id);
-  }
-
   findById(id) {
-    const self = this;
-    return self.Model.findById(id).lean();
+    return this.Model.findById(id).then((model) => {
+      return model ? model.toJSON() : null;
+    });
   }
 
-  find(query) {
-    const self = this;
-    let findOption = {};
-    let sortOptions = {};
-    let skip;
-    let limit;
-
-    /* istanbul ignore else */
-    if (isNumber(query.limit)) {
-      limit = query.limit;
-    }
-
-    /* istanbul ignore else */
-    if (isNumber(query.skip)) {
-      skip = query.skip;
-    }
-
-    /* istanbul ignore else */
-    if (query.sortOptions) {
-      sortOptions[query.sortOptions.sortField] = (query.sortOptions.sortType && query.sortOptions.sortType.toLowerCase() === 'desc') ? -1 : 1;
-    }
-
-    /* istanbul ignore else */
-    if (query.findOption) {
-      findOption = query.findOption;
-    }
-
-    return self.Model.find(findOption)
-      .sort(sortOptions)
-      .skip(skip)
-      .limit(limit)
-      .lean();
+  find(options) {
+    return this.Model.findAll(Object.assign({}, {
+      raw: true
+    }, options));
   }
 
-  findOne(query, projection) {
-    const self = this;
-    return self.Model.findOne(query, projection).lean();
-  }
-
-  update(id, info) {
-    const self = this;
-    return self.Model.findByIdAndUpdate(id, {
-      $set: info
+  update(info, where) {
+    return this.Model.update(info, Object.assign({}, {
+      returning: true
     }, {
-      runValidators: true,
-      new: true
-    }).then((updatedModel) => {
-      return updatedModel.toObject();
+      where
+    })).then((result) => {
+      const models = result[1];
+
+      return models.map(model => model.toJSON());
     });
   }
 
-  remove(id) {
-    const self = this;
-    return self.Model.findByIdAndRemove(id);
+  remove(where, options) {
+    return this.Model.destroy(Object.assign({
+      where
+    }, options));
   }
 
-  create(info) {
-    const self = this;
-    let entity = new self.Model(info);
+  create(info, options) {
+    return this.Model.create(info, options).then(newModel => newModel.toJSON());
+  }
 
-    return entity.save().then((entity) => {
-      return entity.toObject();
+  count(info) {
+    return this.Model.count(info);
+  }
+
+  upsert(model, opts) {
+    return this.Model.upsert(model, Object.assign({}, {
+      validate: true
+    }, opts));
+  }
+
+  bulkCreate(records, options) {
+    return this.Model.bulkCreate(records, Object.assign({}, {
+      returning: true,
+      validate: true
+    }, options)).then(models => {
+      return models.map(model => model.toJSON());
     });
   }
 
-  bulkCreate(models) {
+  bulkUpsert(records, options) {
     const self = this;
-    return self.Model.create(models).then((models) => {
-      return models.map((model) => {
-        return model.toObject();
-      });
+    const upsertPromises = records.map((record) => {
+      return self.upsert(record, options);
     });
+
+    return Promise.all(upsertPromises);
   }
 
-  count(query) {
-    const self = this;
-    return self.Model.count(query);
+  toJSON(info) {
+    const _toJSON = (res) => {
+      return res.toJSON();
+    };
+
+    if (isArray(info)) {
+      return info.map(_toJSON);
+    } else if (!info) {
+      return null;
+    } else {
+      return _toJSON(info);
+    }
   }
 }
-

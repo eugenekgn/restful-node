@@ -1,10 +1,10 @@
 'use strict';
 
-import fs from 'fs';
-import path from 'path';
-import winston from 'winston';
-import config from 'config';
-import DailyRotateFileTransport from 'winston-daily-rotate-file';
+const fs = require('fs');
+const path = require('path');
+const winston = require('winston');
+const config = require('config');
+const DailyRotateFileTransport = require('winston-daily-rotate-file');
 
 const appDir = process.cwd();
 const logsDir = path.join(appDir, config.get('logger.filesPath'));
@@ -36,7 +36,7 @@ const appLogger = new (winston.Logger)({
   transports: transports
 });
 
-export default {
+module.exports = {
   info: (message) => {
     appLogger.info(message);
   },

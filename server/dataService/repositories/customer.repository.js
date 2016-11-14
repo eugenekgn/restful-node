@@ -1,11 +1,13 @@
 'use strict';
 
-import BaseRepository from './base';
-import Customer from '../schemas/customer.schema';
+const BaseRepository = require('./base');
+const Customer = require('../models/customer');
 
 class CustomerRepository extends BaseRepository {
-
+  constructor({customer}) {
+    super(customer);
+  }
 }
 
-export default new CustomerRepository(Customer);
+module.exports = new CustomerRepository(Customer);
 

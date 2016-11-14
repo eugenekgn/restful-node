@@ -7,7 +7,7 @@
 //import proxyquire  from 'proxyquire';
 
 import config from 'config';
-import dbContext from '../../dataService/context';
+import dbContext from '../../dataService/config';
 import dbHelper from '../database';
 import createApp from '../../app';
 

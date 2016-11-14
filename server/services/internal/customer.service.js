@@ -1,9 +1,9 @@
 'use strict';
 
-import isNull from 'lodash/isNull';
-import customerRepository from '../../dataService/repositories/customer.repository';
-import {map, mapArray} from '../../shared/mapper';
-import CustomerDTO from '../models/customerDTO';
+const isNull = require('lodash/isNull');
+const customerRepository = require('../../dataService/models/customer');
+const {map, mapArray} = require('../../shared/mapper');
+const CustomerDTO = require('../models/customerDTO');
 
 class CustomerService {
 
@@ -65,4 +65,4 @@ class CustomerService {
   }
 }
 
-export default new CustomerService();
+module.exports = new CustomerService();

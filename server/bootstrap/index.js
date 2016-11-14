@@ -1,7 +1,7 @@
 'use strict';
 
-import configControllers from './configControllers';
+const configControllers = require('./configControllers');
 
-export default (app) => {
+module.exports = (app) => {
   configControllers(app);
-}
+};

@@ -1,0 +1,11 @@
+'use strict';
+
+const path = require('path');
+const basePath = './server/dataService';
+
+module.exports = {
+  'config': path.resolve(basePath, 'config.json'),
+  'migrations-path': path.resolve(basePath, 'migrations'),
+  'models-path': path.resolve(basePath, 'models'),
+  'seeders-path': path.resolve(basePath, 'seeders')
+};

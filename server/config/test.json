@@ -3,7 +3,20 @@
     "type": "test"
   },
   "database": {
-    "connectionString": "mongodb://localhost:27017/customer_test"
+    "dialect": "mysql",
+    "database": "customer_inventory",
+    "host": "127.0.0.1",
+    "username": "root",
+    "password": "root",
+    "port": 3306,
+    "migrationStorage": "sequelize",
+    "migrationStorageTableName": "sequelize_meta",
+    "seederStorage": "sequelize",
+    "seederStorageTableName": "sequelize_data",
+    "pool": {
+      "maxConnections": 100,
+      "maxIdleTime": 10000
+    }
   },
   "logger": {
     "transports": []
