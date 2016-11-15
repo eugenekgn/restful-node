@@ -1,7 +1,7 @@
 'use strict';
 
 const isNull = require('lodash/isNull');
-const customerRepository = require('../../dataService/models/customer');
+const customerRepository = require('../../dataService/repositories/customer.repository');
 const {map, mapArray} = require('../../shared/mapper');
 const CustomerDTO = require('../models/customerDTO');
 
@@ -31,9 +31,8 @@ class CustomerService {
     });
   }
 
-  create(customer) {
+  createCustomer(customer) {
     const self = this;
-
     const customerModel = map(CustomerDTO, self.customerSource, customer);
     return customerRepository.create(customerModel).then((newCustomer) => {
       return map(self.customerSource, CustomerDTO, newCustomer);
@@ -55,13 +54,13 @@ class CustomerService {
 
     const customerModel = map(CustomerDTO, self.customerSource, customerToUpdate);
 
-    return customerRepository.update(customerId, customerModel).then((updateCustomer) => {
-      return map(self.customerSource, CustomerDTO, updateCustomer);
+    return customerRepository.updateCustomer(customerId, customerModel).then((customer) => {
+      return map(self.customerSource, CustomerDTO, customer);
     });
   }
 
   removeCustomer(customerId) {
-    return customerRepository.remove(customerId);
+    return customerRepository.removeCustomer(customerId);
   }
 }
 

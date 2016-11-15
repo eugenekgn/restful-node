@@ -11,36 +11,49 @@ const logsDir = path.join(appDir, config.get('logger.filesPath'));
 const configTransports = config.get('logger.transports');
 const transports = [];
 
-if (!fs.existsSync(logsDir)) {
-  fs.mkdirSync(logsDir);
-}
+class Logger {
+  constructor() {
 
-if (configTransports.indexOf('console') !== -1) {
-  const appConsoleTransport = new (winston.transports.Console)({
-    timestamp: true
-  });
+    if (!fs.existsSync(logsDir)) {
+      fs.mkdirSync(logsDir);
+    }
 
-  transports.push(appConsoleTransport);
-}
+    if (configTransports.indexOf('console') !== -1) {
+      const appConsoleTransport = new (winston.transports.Console)({
+        timestamp: true
+      });
 
-if (configTransports.indexOf('dailyRotateFile') !== -1) {
-  const appFileTransport = new (DailyRotateFileTransport)({
-    filename: path.join(appDir, config.get('logger.appLogFilePath')),
-    datePattern: '.yyyy-MM-dd'
-  });
+      transports.push(appConsoleTransport);
+    }
 
-  transports.push(appFileTransport);
-}
+    if (configTransports.indexOf('dailyRotateFile') !== -1) {
+      const appFileTransport = new (DailyRotateFileTransport)({
+        filename: path.join(appDir, config.get('logger.appLogFilePath')),
+        datePattern: '.yyyy-MM-dd'
+      });
 
-const appLogger = new (winston.Logger)({
-  transports: transports
-});
+      transports.push(appFileTransport);
+    }
 
-module.exports = {
-  info: (message) => {
-    appLogger.info(message);
-  },
-  error: (message) => {
-    appLogger.error(message);
+    this._logger = new (winston.Logger)({
+      transports: transports
+    });
   }
-};
+
+  logDb(message) {
+    const self = this;
+    self._logger.info(message);
+  }
+
+  info(message) {
+    const self = this;
+    self._logger.info(message);
+  }
+
+  error(message) {
+    const self = this;
+    self._logger.error(message);
+  }
+}
+
+module.exports = new Logger();

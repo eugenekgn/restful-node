@@ -14,7 +14,7 @@ class CustomerController extends BaseController {
     self.router.get('/:customerId', self.wrap(req => self._getCustomerById(req)));
     self.router.post('/', validator(customerValidation.createCustomer), self.wrap(req => self._createCustomer(req)));
     self.router.post('/collection', self.wrap(req => self._createCustomers(req)));
-    self.router.put('/:customerId', validator(customerValidation.updateCustomer), self.wrap(req => self._updateCustomer(req)));
+    self.router.put('/:customerId', self.wrap(req => self._updateCustomer(req)));
     self.router.delete('/:customerId', self.wrap(req => self._delete(req)));
 
     return self.router;
@@ -37,7 +37,7 @@ class CustomerController extends BaseController {
   _createCustomer(req) {
     const self = this;
     const customer = self.getBody(req);
-    return self.service.create(customer);
+    return self.service.createCustomer(customer);
   }
 
   _createCustomers(req) {
@@ -48,7 +48,6 @@ class CustomerController extends BaseController {
 
   _updateCustomer(req) {
     const self = this;
-
     const customerId = get(self.getParams(req), 'customerId');
     const customerToUpdate = self.getBody(req);
 

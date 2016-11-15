@@ -38,8 +38,8 @@
     "boilerplate"
   ],
   "dependencies": {
+    "asyncawait": "1.0.6",
     "automapper-ts": "1.7.3",
-    "bluebird": "3.4.6",
     "body-parser": "1.15.2",
     "compression": "1.6.2",
     "config": "1.24.0",

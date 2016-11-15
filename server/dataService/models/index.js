@@ -1,12 +1,12 @@
 'use strict';
 
 const Sequelize = require('sequelize');
-
 const directoryInfo = require('../../shared/directoryInfo');
 const databaseConfig = require('config').get('database');
+const {camelCase} = require('lodash');
 
 class DatabaseContext {
-  constructor({logger}) {
+  constructor() {
     const sequelize = new Sequelize(
       databaseConfig.database,
       databaseConfig.username,
@@ -14,7 +14,7 @@ class DatabaseContext {
         dialect: databaseConfig.dialect,
         host: databaseConfig.host,
         port: databaseConfig.port,
-        logging: logger.logDb.bind(logger),
+        logging: false,
         pool: databaseConfig.pool,
         define: {
           freezeTableName: true,
@@ -28,14 +28,13 @@ class DatabaseContext {
         }
       });
 
-    directoryInfo.get(__dirname)
+    directoryInfo.getAllFiles(__dirname)
       .filter((file) => {
         return !file.endsWith('index.js');
       })
       .forEach((file) => {
         const model = sequelize.import(file);
-
-        this[model.name] = model;
+        this[camelCase(model.name)] = model;
       });
 
     Object.keys(this).forEach((modelName) => {
@@ -61,4 +60,4 @@ class DatabaseContext {
   }
 }
 
-module.exports = DatabaseContext;
+module.exports = new DatabaseContext();

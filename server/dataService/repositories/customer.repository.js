@@ -1,13 +1,26 @@
 'use strict';
 
 const BaseRepository = require('./base');
-const Customer = require('../models/customer');
+const dbContext = require('../models');
 
 class CustomerRepository extends BaseRepository {
-  constructor({customer}) {
-    super(customer);
+  constructor(context) {
+    super(context.customer);
+  }
+
+  updateCustomer(customerId, model) {
+    const self = this;
+    return self.update(model, {id: customerId});
+  }
+
+  removeCustomer(customerId) {
+    const self = this;
+
+    return self.remove({
+      id: customerId
+    });
   }
 }
 
-module.exports = new CustomerRepository(Customer);
+module.exports = new CustomerRepository(dbContext);
 

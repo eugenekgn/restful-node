@@ -1,20 +1,21 @@
 'use strict';
 
-import fs from 'fs';
+const fs = require('fs');
+const path = require('path');
 
 class DirectoryInfo {
 
   /**
    * Gets all the files from a directory recursively
-   * @param path
+   * @param dir
    * @param _files
    * @returns {Array}
    */
-  getAllFiles(path, _files = []) {
-    const files = fs.readdirSync(path);
+  getAllFiles(dir, _files = []) {
+    const files = fs.readdirSync(dir);
 
     for (let index = 0; index < files.length; index++) {
-      const fileName = path.resolve(path, files[index]);
+      const fileName = path.resolve(dir, files[index]);
 
       if (fs.statSync(fileName).isDirectory()) {
         this.getAllFiles(fileName, _files);
@@ -22,9 +23,8 @@ class DirectoryInfo {
         _files.push(fileName);
       }
     }
-
     return _files;
   }
 }
 
-export default new DirectoryInfo();
+module.exports = new DirectoryInfo();

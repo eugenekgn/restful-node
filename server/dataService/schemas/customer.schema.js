@@ -12,6 +12,11 @@ const getCustomer = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
+    username: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      unique: true
+    },
     first_name: {
       type: DataTypes.STRING(30),
       allowNull: false
@@ -19,11 +24,6 @@ const getCustomer = (sequelize, DataTypes) => {
     last_name: {
       type: DataTypes.STRING(30),
       allowNull: false
-    },
-    username: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-      unique: true
     },
     mobile_number: {
       type: DataTypes.STRING(100)

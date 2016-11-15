@@ -14,7 +14,7 @@ class CustomerMaps {
      * Map =require( dto to model
      */
     mapper.createMap(CustomerDTOModel, DALCustomerModel)
-      .forMember('_id', (opts) => {
+      .forMember('id', (opts) => {
         opts.mapFrom('customerId');
       })
       .forMember('first_name', (opts) => {
@@ -38,7 +38,7 @@ class CustomerMaps {
      */
     mapper.createMap(DALCustomerModel, CustomerDTOModel)
       .forMember('customerId', (opts) => {
-        opts.mapFrom('_id');
+        opts.mapFrom('id');
       })
       .forMember('firstName', (opts) => {
         opts.mapFrom('first_name');

@@ -2,8 +2,10 @@
 
 const isArray = require('lodash/isArray');
 
-export default class BaseRepository {
+
+class BaseRepository {
   constructor(model) {
+
     this.Model = model;
   }
 
@@ -20,14 +22,18 @@ export default class BaseRepository {
   }
 
   update(info, where) {
-    return this.Model.update(info, Object.assign({}, {
-      returning: true
-    }, {
+    const self = this;
+
+    return this.Model.update(info, Object.assign({}, {}, {
       where
     })).then((result) => {
-      const models = result[1];
+      const isNotUpdated = !result[0];
 
-      return models.map(model => model.toJSON());
+      if (isNotUpdated) {
+        return null;
+      }
+
+      return self.findById(info.id);
     });
   }
 
@@ -55,7 +61,7 @@ export default class BaseRepository {
     return this.Model.bulkCreate(records, Object.assign({}, {
       returning: true,
       validate: true
-    }, options)).then(models => {
+    }, options)).then((models) => {
       return models.map(model => model.toJSON());
     });
   }
@@ -83,3 +89,5 @@ export default class BaseRepository {
     }
   }
 }
+
+module.exports = BaseRepository;
