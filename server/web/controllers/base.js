@@ -36,7 +36,7 @@ export default class BaseController {
           data = {
             statusCode: httpStatus.NOT_FOUND,
             message: httpStatus[404]
-          }
+          };
         }
         self.send(res, null, data);
       }, (err) => {

@@ -94,7 +94,9 @@ describe('## Customer APIs', () => {
           expect(res.body).to.be.an('array');
           done();
         })
-        .catch(done);
+        .catch((e) => {
+          console.log(e);
+        });
     });
   });
 
